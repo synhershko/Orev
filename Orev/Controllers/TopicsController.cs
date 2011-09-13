@@ -19,7 +19,7 @@ namespace Orev.Controllers
 		[Authorize]
 		public ActionResult Add(string lang)
 		{
-			return View("Edit", new Topic { Language = lang });
+			return View("Edit", new Topic { Language = (string.IsNullOrWhiteSpace(lang) ? "en-US" : lang) });
 		}
 
 		[HttpGet]

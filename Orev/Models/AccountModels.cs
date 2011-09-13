@@ -26,6 +26,7 @@ namespace Orev.Models
 	public class LogOnModel
 	{
 		[Required]
+		[DataType(DataType.EmailAddress)]
 		[Display(Name = "Login")]
 		public string Login { get; set; }
 
@@ -50,7 +51,6 @@ namespace Orev.Models
 
 		[Required]
 		[StringLength(50, ErrorMessage = "E-mail address longer than 50 characters isn't valid.")]
-		[RegularExpression("^[a-z0-9_\\+-]+(\\.[a-z0-9_\\+-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*\\.([a-z]{2,4})$", ErrorMessage = "A valid e-mail address is required.")]
 		[DataType(DataType.EmailAddress)]
 		[Display(Name = "Email address (used as your login ID, too)")]
 		public string Email { get; set; }
