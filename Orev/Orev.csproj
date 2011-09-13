@@ -84,7 +84,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CorporaController.cs" />
+    <Compile Include="Controllers\JudgeController.cs" />
     <Compile Include="Controllers\RavenController.cs" />
+    <Compile Include="Controllers\TopicsController.cs" />
     <Compile Include="Models\Corpus.cs" />
     <Compile Include="Models\CorpusDocument.cs" />
     <Compile Include="Models\Judgment.cs" />
@@ -198,6 +201,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Infrastructure\Indexes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -207,6 +211,18 @@
       <Project>{C440BB67-702E-4C40-AAD6-6C48F91E9583}</Project>
       <Name>Orev.CorpusReaders</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Corpora\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Corpora\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Topics\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Topics\Edit.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
