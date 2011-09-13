@@ -4,9 +4,18 @@
 # exclude patterns (uncomment them if you want to use them):
 # *.[oa]
 # *~
+_legacy/
 OrevWeb/Corpora
 obj
 bin
+[Dd]ebug/
+[Rr]elease/
+build/
+[Bb]in/
+[Oo]bj/
+[Hh]elp/
 *.suo
+*.sln.cache
+_ReSharper.*/
 *.user
 ~$*
