@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using System.Web.Security;
+using Orev.Helpers;
 using Orev.Models;
 using Raven.Abstractions.Exceptions;
 
@@ -17,11 +18,6 @@ namespace Orev.Controllers
 			return View();
 		}
 
-		private User GetUser(string login)
-		{
-			return RavenSession.Load<User>("users/" + login);
-		}
-
 		//
 		// POST: /Account/LogOn
 
@@ -30,7 +26,7 @@ namespace Orev.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var user = GetUser(model.Login);
+				var user = RavenSession.GetUser(model.Login);
 				if (user != null && user.Enabled && user.ValidatePassword(model.Password))
 				{
 					FormsAuthentication.SetAuthCookie(model.Login, model.RememberMe);
@@ -86,6 +82,7 @@ namespace Orev.Controllers
 										LastName = model.LastName,
 										Email = model.Email,
 				                   		DateJoined = DateTime.Now,
+										Role = Models.User.OperationRoles.Standard,
 										Enabled = true,
 				                   	}.SetPassword(model.Password));
 
@@ -134,7 +131,7 @@ namespace Orev.Controllers
 				bool changePasswordSucceeded = false;
 				try
 				{
-					var currentUser = GetUser(User.Identity.Name);
+					var currentUser = RavenSession.GetUser(User.Identity.Name);
 					if (currentUser.ValidatePassword(model.OldPassword))
 					{
 						currentUser.SetPassword(model.NewPassword);

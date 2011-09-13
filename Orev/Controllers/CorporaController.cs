@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using System.Web.Security;
+using Orev.Helpers;
 using Orev.Models;
 
 namespace Orev.Controllers
@@ -11,7 +13,7 @@ namespace Orev.Controllers
 
         public ActionResult Index()
         {
-        	var corpora = RavenSession.Query<Corpus>().ToArray();
+        	var corpora = RavenSession.Query<Corpus>().Customize(x => x.WaitForNonStaleResultsAsOfLastWrite()).ToArray();
             return View(corpora);
         }
 
@@ -39,7 +41,7 @@ namespace Orev.Controllers
 			if (!ModelState.IsValid)
 				return View("Edit", input);
 
-			var corpus = RavenSession.Load<Corpus>(input.Id);
+			var corpus = string.IsNullOrWhiteSpace(input.Id) ? null : RavenSession.Load<Corpus>(input.Id);
 			if (corpus != null)
 			{
 				corpus.Description = input.Description;
@@ -52,6 +54,46 @@ namespace Orev.Controllers
 			}
 
 			return RedirectToAction("Index");
+		}
+
+		[HttpGet]
+		public ActionResult Details(int id)
+		{
+			var corpus = RavenSession.Load<Corpus>(id);
+			if (corpus == null)
+				return HttpNotFound();
+
+			ViewBag.IntId = id;
+
+			return View(corpus);
+		}
+
+		[HttpGet]
+		[Authorize]
+		public ActionResult FeedDocuments(int corpusId)
+		{
+			var corpus = RavenSession.Load<Corpus>(corpusId);
+			if (corpus == null)
+				return HttpNotFound();
+
+			return View(new CorpusFeedingInput {CorpusId = corpus.Id});
+		}
+
+		[HttpPost]
+		[Authorize]
+		public ActionResult FeedDocuments(CorpusFeedingInput input)
+		{
+			var user = RavenSession.GetUser(User.Identity.Name);
+			if (user == null || user.Role != Models.User.OperationRoles.Admin)
+				return HttpForbidden();
+
+			if (!ModelState.IsValid)
+				return View("FeedDocuments", input);
+
+			var corpus = RavenSession.Load<Corpus>(input.CorpusId);
+			if (corpus == null)
+				return HttpNotFound("The requested corpus does not exist.");
+			return View("Index");
 		}
     }
 }

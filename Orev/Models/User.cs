@@ -7,6 +7,13 @@ namespace Orev.Models
 {
 	public class User
 	{
+		public enum OperationRoles
+		{
+			ViewerOnly,
+			Standard,
+			Admin,
+		}
+
 		private const string ConstantSalt = "t2fy^cerv3f4#";
 
 		public string Id { get; set; }
@@ -14,6 +21,8 @@ namespace Orev.Models
 		public string LastName { get; set; }
 		public string Email { get; set; }
 		protected string HashedPassword { get; private set; }
+
+		public OperationRoles Role { get; set; }
 		public bool Enabled { get; set; }
 
 		public DateTime DateJoined { get; set; }

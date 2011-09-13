@@ -42,6 +42,11 @@ namespace Orev.Controllers
 		{
 			return new HttpStatusCodeResult(304);
 		}
+
+		protected HttpStatusCodeResult HttpForbidden()
+		{
+			return new HttpStatusCodeResult(403);
+		}
 		
 		/*protected ActionResult Xml(XDocument xml, string etag)
 		{

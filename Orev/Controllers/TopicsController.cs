@@ -11,7 +11,7 @@ namespace Orev.Controllers
 
         public ActionResult Index()
         {
-        	var topics = RavenSession.Query<Topic>().ToArray();
+			var topics = RavenSession.Query<Topic>().Customize(x => x.WaitForNonStaleResultsAsOfLastWrite()).ToArray();
             return View(topics);
         }
 
@@ -39,7 +39,7 @@ namespace Orev.Controllers
 			if (!ModelState.IsValid)
 				return View("Edit", input);
 
-			var topic = RavenSession.Load<Topic>(input.Id);
+			var topic = string.IsNullOrWhiteSpace(input.Id) ? null : RavenSession.Load<Topic>(input.Id);
 			if (topic != null)
 			{
 				topic.Description = input.Description;
