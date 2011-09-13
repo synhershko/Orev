@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using Orev.Helpers;
 using Orev.Models;
 
 namespace Orev.Controllers
@@ -26,9 +27,14 @@ namespace Orev.Controllers
 		[Authorize]
 		public ActionResult Edit(int id)
 		{
+			var user = RavenSession.GetUser(User.Identity.Name);
+			if (user == null || user.Role != Models.User.OperationRoles.Admin)
+				return HttpForbidden();
+
 			var topic = RavenSession.Load<Topic>(id);
 			if (topic == null)
 				return HttpNotFound("The requested corpus does not exist.");
+
 			return View(topic);
 		}
 
@@ -42,6 +48,10 @@ namespace Orev.Controllers
 			var topic = string.IsNullOrWhiteSpace(input.Id) ? null : RavenSession.Load<Topic>(input.Id);
 			if (topic != null)
 			{
+				var user = RavenSession.GetUser(User.Identity.Name);
+				if (user == null || user.Role != Models.User.OperationRoles.Admin)
+					return HttpForbidden();
+
 				topic.Description = input.Description;
 				topic.Language = input.Language;
 				topic.Narrator = input.Narrator;

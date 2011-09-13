@@ -28,6 +28,10 @@ namespace Orev.Controllers
 		[Authorize]
 		public ActionResult Edit(int id)
 		{
+			var user = RavenSession.GetUser(User.Identity.Name);
+			if (user == null || user.Role != Models.User.OperationRoles.Admin)
+				return HttpForbidden();
+
 			var corpus = RavenSession.Load<Corpus>(id);
 			if (corpus == null)
 				return HttpNotFound("The requested corpus does not exist.");
@@ -45,6 +49,10 @@ namespace Orev.Controllers
 			var corpus = string.IsNullOrWhiteSpace(input.Id) ? null : RavenSession.Load<Corpus>(input.Id);
 			if (corpus != null)
 			{
+				var user = RavenSession.GetUser(User.Identity.Name);
+				if (user == null || user.Role != Models.User.OperationRoles.Admin)
+					return HttpForbidden();
+
 				corpus.Description = input.Description;
 				corpus.Language = input.Language;
 				corpus.Name = input.Name;
@@ -71,6 +79,10 @@ namespace Orev.Controllers
 		[Authorize]
 		public ActionResult FeedDocuments(int corpusId)
 		{
+			var user = RavenSession.GetUser(User.Identity.Name);
+			if (user == null || user.Role != Models.User.OperationRoles.Admin)
+				return HttpForbidden();
+
 			var corpus = RavenSession.Load<Corpus>(corpusId);
 			if (corpus == null)
 				return HttpNotFound();
