@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orev", "Orev\Orev.csproj", "{4F37995C-B2A5-40C1-99CD-AB02647666AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orev.CorpusReaders", "Orev.CorpusReaders\Orev.CorpusReaders.csproj", "{C440BB67-702E-4C40-AAD6-6C48F91E9583}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4F37995C-B2A5-40C1-99CD-AB02647666AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F37995C-B2A5-40C1-99CD-AB02647666AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F37995C-B2A5-40C1-99CD-AB02647666AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F37995C-B2A5-40C1-99CD-AB02647666AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C440BB67-702E-4C40-AAD6-6C48F91E9583}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C440BB67-702E-4C40-AAD6-6C48F91E9583}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C440BB67-702E-4C40-AAD6-6C48F91E9583}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C440BB67-702E-4C40-AAD6-6C48F91E9583}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
