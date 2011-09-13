@@ -14,7 +14,7 @@
     <fieldset>
         <legend>Corpus</legend>
 
-        @Html.HiddenFor(model => model.Id)
+        <input id="Id" name="Id" type="hidden" value="@MvcHtmlString.Create(Model.Id ?? string.Empty)" />
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Name)

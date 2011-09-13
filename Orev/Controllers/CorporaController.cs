@@ -31,6 +31,7 @@ namespace Orev.Controllers
 			var corpus = RavenSession.Load<Corpus>(id);
 			if (corpus == null)
 				return HttpNotFound("The requested corpus does not exist.");
+
 			return View(corpus);
 		}
 
@@ -62,8 +63,6 @@ namespace Orev.Controllers
 			var corpus = RavenSession.Load<Corpus>(id);
 			if (corpus == null)
 				return HttpNotFound();
-
-			ViewBag.IntId = id;
 
 			return View(corpus);
 		}

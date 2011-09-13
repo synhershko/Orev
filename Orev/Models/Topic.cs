@@ -28,7 +28,6 @@ namespace Orev.Models
 		/// <summary>
 		/// Id of user submitting this topic
 		/// </summary>
-		[Required]
 		public string UserId { get; set; }
 	}
 }

@@ -14,8 +14,8 @@
     <fieldset>
         <legend>Topic</legend>
 
-        @Html.HiddenFor(model => model.Id)
-        @Html.HiddenFor(model => model.UserId)
+        <input id="Id" name="Id" type="hidden" value="@MvcHtmlString.Create(Model.Id ?? string.Empty)" />
+        <input id="UserId" name="UserId" type="hidden" value="@MvcHtmlString.Create(Model.UserId ?? string.Empty)" />
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Title)
