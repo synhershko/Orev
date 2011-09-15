@@ -99,7 +99,7 @@ namespace Orev.Controllers
 		[Authorize]
 		public ActionResult SelectLanguage()
 		{
-			var langs = RavenSession.Advanced.DatabaseCommands.GetTerms("CorpusBasicIndex", "Language", null, 50);
+			var langs = RavenSession.Advanced.DatabaseCommands.GetTerms("TopicsBasicIndex", "Language", null, 50);
 			if (langs.Count() == 0)
 				ViewBag.Message = "No languages were found. Please add a new topic";
 

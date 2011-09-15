@@ -42,7 +42,7 @@
             @Html.DisplayFor(modelItem => item.Language)
         </td>
         <td>
-            @Html.ActionLink("Start Judging", "Index", new { topicId=item.Id, lang = item.Language })
+            @Html.ActionLink("Start Judging", "Index", new { topicId=item.Id.ToIntId(), lang = item.Language })
         </td>
     </tr>
 }
