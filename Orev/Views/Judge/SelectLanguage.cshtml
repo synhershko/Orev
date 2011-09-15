@@ -1,0 +1,16 @@
+﻿@model IEnumerable<string>
+
+@{
+    ViewBag.Title = "SelectLanguage";
+}
+
+<h2>SelectLanguage</h2>
+
+<p>@Html.ValidationSummary()</p>
+
+@foreach (var lang in Model)
+{
+	<div>@Html.Encode(lang) (@Html.ActionLink("Select a topic in this language", "SelectTopic", new { lang })%>)</div>
+}
+
+<p>@Html.ActionLink("Create new topic", "Add", "Topics")</p>

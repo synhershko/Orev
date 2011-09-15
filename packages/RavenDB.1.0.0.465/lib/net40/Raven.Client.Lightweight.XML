@@ -792,6 +792,15 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Raven.Client.Connection.IDatabaseCommands.GetFacets(System.String,Raven.Abstractions.Data.IndexQuery,System.String)">
+            <summary>
+            Using the given Index, calculate the facets as per the specified doc
+            </summary>
+            <param name="index"></param>
+            <param name="query"></param>
+            <param name="facetSetupDoc"></param>
+            <returns></returns>
+        </member>
         <member name="M:Raven.Client.Connection.IDatabaseCommands.Patch(System.String,Raven.Abstractions.Data.PatchRequest[])">
             <summary>
             Sends a patch request for a specific document, ignoring the document's Etag
@@ -1457,6 +1466,14 @@
              You can page through the results by use fromValue parameter as the 
              starting point for the next query
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Connection.ServerClient.GetFacets(System.String,Raven.Abstractions.Data.IndexQuery,System.String)">
+            <summary>
+            Using the given Index, calculate the facets as per the specified doc
+            </summary>
+            <param name="query"></param>
+            <param name="facetSetupDoc"></param>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.Connection.ServerClient.Patch(System.String,Raven.Abstractions.Data.PatchRequest[])">
@@ -6933,6 +6950,124 @@
              Ensures that the database exists, creating it if needed
             </summary>
         </member>
+        <member name="T:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1">
+            <summary>
+            Abstract class used to provide infrastructure service for actual creation tasks
+            </summary>
+        </member>
+        <member name="T:Raven.Client.Indexes.AbstractIndexCreationTask">
+            <summary>
+            Base class for creating indexes
+            </summary>
+            <remarks>
+            The naming convention is that underscores in the inherited class names are replaced by slashed
+            For example: Posts_ByName will be saved to Posts/ByName
+            </remarks>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.CreateIndexDefinition">
+            <summary>
+            Creates the index definition.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.Project``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Object})">
+            <summary>
+            Allows to use lambdas over dynamic
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.Execute(Raven.Client.IDocumentStore)">
+            <summary>
+            Executes the index creation against the specified document store.
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.Execute(Raven.Client.Connection.IDatabaseCommands,Raven.Client.Document.DocumentConvention)">
+            <summary>
+            Executes the index creation against the specified document database using the specified conventions
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.ExecuteAsync(Raven.Client.Connection.Async.IAsyncDatabaseCommands,Raven.Client.Document.DocumentConvention)">
+            <summary>
+            Executes the index creation against the specified document store.
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask.IndexName">
+            <summary>
+            Gets the name of the index.
+            </summary>
+            <value>The name of the index.</value>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask.Conventions">
+            <summary>
+            Gets or sets the document store.
+            </summary>
+            <value>The document store.</value>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.#ctor">
+            <summary>
+            Create a new instance
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Index(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Raven.Abstractions.Indexing.FieldIndexing)">
+            <summary>
+            Register a field to be indexed
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Store(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Raven.Abstractions.Indexing.FieldStorage)">
+            <summary>
+            Register a field to be stored
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Sort(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Raven.Abstractions.Indexing.SortOptions)">
+            <summary>
+            Register a field to be sorted
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.TransformResults">
+            <summary>
+            The result translator definition
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Reduce">
+            <summary>
+            The reduce definition
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Stores">
+            <summary>
+            Index storage options
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.SortOptions">
+            <summary>
+            Index sort options
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Analyzers">
+            <summary>
+            Index sort options
+            </summary>
+        </member>
+        <member name="P:Raven.Client.Indexes.AbstractGenericIndexCreationTask`1.Indexes">
+            <summary>
+            Indexing options
+            </summary>
+        </member>
+        <member name="T:Raven.Client.Indexes.AbstractMultiMapIndexCreationTask`1">
+            <summary>
+            Allow to create indexes with multiple maps
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Indexes.AbstractMultiMapIndexCreationTask`1.CreateIndexDefinition">
+            <summary>
+            Creates the index definition.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Raven.Client.Indexes.AbstractMultiMapIndexCreationTask">
+            <summary>
+            Allow to create indexes with multiple maps
+            </summary>
+        </member>
         <member name="T:Raven.Client.Listeners.IDocumentConversionListener">
             <summary>
             Hook for users to provide additional logic for converting to / from 
@@ -6998,70 +7133,15 @@
             <param name="entityInstance">The entity instance.</param>
             <param name="metadata">The metadata.</param>
         </member>
-        <member name="T:Raven.Client.Indexes.AbstractIndexCreationTask">
-            <summary>
-            Base class for creating indexes
-            </summary>
-            <remarks>
-            The naming convention is that underscores in the inherited class names are replaced by slashed
-            For example: Posts_ByName will be saved to Posts/ByName
-            </remarks>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.CreateIndexDefinition">
-            <summary>
-            Creates the index definition.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.Project``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Object})">
-            <summary>
-            Allows to use lambdas over dynamic
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.Execute(Raven.Client.IDocumentStore)">
-            <summary>
-            Executes the index creation against the specified document store.
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.Execute(Raven.Client.Connection.IDatabaseCommands,Raven.Client.Document.DocumentConvention)">
-            <summary>
-            Executes the index creation against the specified document database using the specified conventions
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask.ExecuteAsync(Raven.Client.Connection.Async.IAsyncDatabaseCommands,Raven.Client.Document.DocumentConvention)">
-            <summary>
-            Executes the index creation against the specified document store.
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask.IndexName">
-            <summary>
-            Gets the name of the index.
-            </summary>
-            <value>The name of the index.</value>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask.Conventions">
-            <summary>
-            Gets or sets the document store.
-            </summary>
-            <value>The document store.</value>
-        </member>
         <member name="T:Raven.Client.Indexes.AbstractIndexCreationTask`1">
             <summary>
             Base class for creating indexes
             </summary>
-            <remarks>
-            The naming convention is that underscores in the inherited class names are replaced by slashed
-            For example: Posts_ByName will be saved to Posts/ByName
-            </remarks>
         </member>
         <member name="T:Raven.Client.Indexes.AbstractIndexCreationTask`2">
             <summary>
             Base class for creating indexes
             </summary>
-            <remarks>
-            The naming convention is that underscores in the inherited class names are replaced by slashed
-            For example: Posts_ByName will be saved to Posts/ByName
-            </remarks>
         </member>
         <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask`2.CreateIndexDefinition">
             <summary>
@@ -7069,59 +7149,9 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask`2.#ctor">
-            <summary>
-            Create a new instance
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask`2.Index(System.Linq.Expressions.Expression{System.Func{`1,System.Object}},Raven.Abstractions.Indexing.FieldIndexing)">
-            <summary>
-            Register a field to be indexed
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask`2.Store(System.Linq.Expressions.Expression{System.Func{`1,System.Object}},Raven.Abstractions.Indexing.FieldStorage)">
-            <summary>
-            Register a field to be stored
-            </summary>
-        </member>
-        <member name="M:Raven.Client.Indexes.AbstractIndexCreationTask`2.Sort(System.Linq.Expressions.Expression{System.Func{`1,System.Object}},Raven.Abstractions.Indexing.SortOptions)">
-            <summary>
-            Register a field to be sorted
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask`2.TransformResults">
-            <summary>
-            The result translator definition
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask`2.Reduce">
-            <summary>
-            The reduce definition
-            </summary>
-        </member>
         <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask`2.Map">
             <summary>
             The map definition
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask`2.Stores">
-            <summary>
-            Index storage options
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask`2.SortOptions">
-            <summary>
-            Index sort options
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask`2.Analyzers">
-            <summary>
-            Index sort options
-            </summary>
-        </member>
-        <member name="P:Raven.Client.Indexes.AbstractIndexCreationTask`2.Indexes">
-            <summary>
-            Indexing options
             </summary>
         </member>
         <member name="T:Raven.Client.Indexes.ExpressionOperatorPrecedence">
@@ -7221,299 +7251,299 @@
         </member>
         <member name="T:Raven.Client.Indexes.ExpressionStringBuilder">
             <summary>
-            Based off of System.Linq.Expressions.ExpressionStringBuilder
+              Based off of System.Linq.Expressions.ExpressionStringBuilder
             </summary>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.ExpressionToString(Raven.Client.Document.DocumentConvention,System.Boolean,System.Type,System.String,System.Linq.Expressions.Expression)">
             <summary>
-            Convert the expression to a string
+              Convert the expression to a string
             </summary>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.ToString">
             <summary>
-            Returns a <see cref="T:System.String"/> that represents this instance.
+              Returns a <see cref="T:System.String"/> that represents this instance.
             </summary>
             <returns>
-            A <see cref="T:System.String"/> that represents this instance.
+              A <see cref="T:System.String"/> that represents this instance.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitBinary(System.Linq.Expressions.BinaryExpression)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.BinaryExpression"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.BinaryExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitBlock(System.Linq.Expressions.BlockExpression)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.BlockExpression"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.BlockExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitCatchBlock(System.Linq.Expressions.CatchBlock)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.CatchBlock"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.CatchBlock" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitConditional(System.Linq.Expressions.ConditionalExpression)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.ConditionalExpression"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.ConditionalExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitConstant(System.Linq.Expressions.ConstantExpression)">
             <summary>
-            Visits the <see cref="T:System.Linq.Expressions.ConstantExpression"/>.
+              Visits the <see cref = "T:System.Linq.Expressions.ConstantExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitDebugInfo(System.Linq.Expressions.DebugInfoExpression)">
             <summary>
-            Visits the <see cref="T:System.Linq.Expressions.DebugInfoExpression"/>.
+              Visits the <see cref = "T:System.Linq.Expressions.DebugInfoExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitDefault(System.Linq.Expressions.DefaultExpression)">
             <summary>
-            Visits the <see cref="T:System.Linq.Expressions.DefaultExpression"/>.
+              Visits the <see cref = "T:System.Linq.Expressions.DefaultExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitDynamic(System.Linq.Expressions.DynamicExpression)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.DynamicExpression"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.DynamicExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitElementInit(System.Linq.Expressions.ElementInit)">
             <summary>
-            Visits the element init.
+              Visits the element init.
             </summary>
-            <param name="initializer">The initializer.</param>
+            <param name = "initializer">The initializer.</param>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitExtension(System.Linq.Expressions.Expression)">
             <summary>
-            Visits the children of the extension expression.
+              Visits the children of the extension expression.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitGoto(System.Linq.Expressions.GotoExpression)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.GotoExpression"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.GotoExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitIndex(System.Linq.Expressions.IndexExpression)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.IndexExpression"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.IndexExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitInvocation(System.Linq.Expressions.InvocationExpression)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.InvocationExpression"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.InvocationExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitLabel(System.Linq.Expressions.LabelExpression)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.LabelExpression"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.LabelExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitLambda``1(System.Linq.Expressions.Expression{``0})">
             <summary>
-            Visits the lambda.
+              Visits the lambda.
             </summary>
-            <typeparam name="T"></typeparam>
-            <param name="node">The node.</param>
+            <typeparam name = "T"></typeparam>
+            <param name = "node">The node.</param>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitListInit(System.Linq.Expressions.ListInitExpression)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.ListInitExpression"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.ListInitExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitLoop(System.Linq.Expressions.LoopExpression)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.LoopExpression"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.LoopExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitMember(System.Linq.Expressions.MemberExpression)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.MemberExpression"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.MemberExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitMemberAssignment(System.Linq.Expressions.MemberAssignment)">
             <summary>
-            Visits the member assignment.
+              Visits the member assignment.
             </summary>
-            <param name="assignment">The assignment.</param>
+            <param name = "assignment">The assignment.</param>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitMemberInit(System.Linq.Expressions.MemberInitExpression)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.MemberInitExpression"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.MemberInitExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitMemberListBinding(System.Linq.Expressions.MemberListBinding)">
             <summary>
-            Visits the member list binding.
+              Visits the member list binding.
             </summary>
-            <param name="binding">The binding.</param>
+            <param name = "binding">The binding.</param>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitMemberMemberBinding(System.Linq.Expressions.MemberMemberBinding)">
             <summary>
-            Visits the member member binding.
+              Visits the member member binding.
             </summary>
-            <param name="binding">The binding.</param>
+            <param name = "binding">The binding.</param>
             <returns></returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitMethodCall(System.Linq.Expressions.MethodCallExpression)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.MethodCallExpression"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.MethodCallExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitNew(System.Linq.Expressions.NewExpression)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.NewExpression"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.NewExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitNewArray(System.Linq.Expressions.NewArrayExpression)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.NewArrayExpression"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.NewArrayExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitParameter(System.Linq.Expressions.ParameterExpression)">
             <summary>
-            Visits the <see cref="T:System.Linq.Expressions.ParameterExpression"/>.
+              Visits the <see cref = "T:System.Linq.Expressions.ParameterExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitRuntimeVariables(System.Linq.Expressions.RuntimeVariablesExpression)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.RuntimeVariablesExpression"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.RuntimeVariablesExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitSwitch(System.Linq.Expressions.SwitchExpression)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.SwitchExpression"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.SwitchExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitSwitchCase(System.Linq.Expressions.SwitchCase)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.SwitchCase"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.SwitchCase" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitTry(System.Linq.Expressions.TryExpression)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.TryExpression"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.TryExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitTypeBinary(System.Linq.Expressions.TypeBinaryExpression)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.TypeBinaryExpression"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.TypeBinaryExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="M:Raven.Client.Indexes.ExpressionStringBuilder.VisitUnary(System.Linq.Expressions.UnaryExpression)">
             <summary>
-            Visits the children of the <see cref="T:System.Linq.Expressions.UnaryExpression"/>.
+              Visits the children of the <see cref = "T:System.Linq.Expressions.UnaryExpression" />.
             </summary>
-            <param name="node">The expression to visit.</param>
+            <param name = "node">The expression to visit.</param>
             <returns>
-            The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
+              The modified expression, if it or any subexpression was modified; otherwise, returns the original expression.
             </returns>
         </member>
         <member name="T:Raven.Client.Indexes.IClientSideDatabase">
@@ -7586,7 +7616,7 @@
             Initializes a new instance of the <see cref="T:Raven.Client.Indexes.IndexDefinitionBuilder`2"/> class.
             </summary>
         </member>
-        <member name="M:Raven.Client.Indexes.IndexDefinitionBuilder`2.ToIndexDefinition(Raven.Client.Document.DocumentConvention)">
+        <member name="M:Raven.Client.Indexes.IndexDefinitionBuilder`2.ToIndexDefinition(Raven.Client.Document.DocumentConvention,System.Boolean)">
             <summary>
             Toes the index definition.
             </summary>
@@ -8079,6 +8109,11 @@
             </summary>
             <summary>
              Extensions to the linq syntax
+            </summary>
+        </member>
+        <member name="M:Raven.Client.Linq.LinqExtensions.ToFacets``1(System.Linq.IQueryable{``0},System.String)">
+            <summary>
+            Query the facets results for this query using the specified facet document
             </summary>
         </member>
         <member name="M:Raven.Client.Linq.LinqExtensions.As``1(System.Linq.IQueryable)">

@@ -57,14 +57,39 @@ namespace Orev.Infrastructure
 		}
 	}
 
-	public class CorpusDocuments_ByCorpusJudgmentsCount : AbstractIndexCreationTask<Judgment, CorpusDocument>
+	public class CorpusDocuments_ByNextUnrated : AbstractMultiMapIndexCreationTask<CorpusDocuments_ByNextUnrated.ReduceResult>
 	{
-		public CorpusDocuments_ByCorpusJudgmentsCount()
+		public class ReduceResult
 		{
-			Map = docs => from doc in docs
-						  select new { doc.CorpusId, doc.DocumentId, doc.TopicId, doc.UserId, doc.UserJudgement };
+			public string DocumentId { get; set; }
+			public string CorpusId { get; set; }
+			public string[] Topics { get; set; }
+		}
 
+		public CorpusDocuments_ByNextUnrated()
+		{
+			AddMap<CorpusDocument>(docs => from corpusDoc in docs
+										   select new  { DocumentId = corpusDoc.Id, CorpusId = corpusDoc.CorpusId, Topics = new string[0] }
+										   );
 
+			AddMap<Judgment>(judgments => from j in judgments
+										  select new  { DocumentId = j.DocumentId, CorpusId = string.Empty, Topics = new[] { j.TopicId } });
+
+			Reduce = results => from result in results
+								group result by result.DocumentId
+			                    into g
+									select new 
+			                           	{
+			                           		DocumentId = g.Key,
+											CorpusId = g.Select(x=>x.CorpusId).FirstOrDefault(),
+			                           		Topics = g.SelectMany(x => x.Topics).Distinct()
+			                           	};
+
+			/*
+			TransformResults = (db, results) => from result in results
+												let doc = db.Load<CorpusDocument>(result.DocumentId)
+			                                    select doc;
+			*/
 		}
 	}
 }

@@ -89,6 +89,7 @@
     <Compile Include="Controllers\RavenController.cs" />
     <Compile Include="Controllers\TopicsController.cs" />
     <Compile Include="Helpers\AccountHelpers.cs" />
+    <Compile Include="Helpers\AjaxOnlyAttribute.cs" />
     <Compile Include="Helpers\RavenHelpers.cs" />
     <Compile Include="Infrastructure\RavenIndexDefinitions.cs" />
     <Compile Include="Models\Corpus.cs" />
@@ -232,6 +233,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Corpora\FeedDocuments.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Judge\SelectLanguage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Judge\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Judge\SelectTopic.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

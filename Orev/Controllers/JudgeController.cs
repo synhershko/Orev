@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using Orev.Helpers;
+using Orev.Infrastructure;
 using Orev.Models;
 
 namespace Orev.Controllers
@@ -24,7 +26,7 @@ namespace Orev.Controllers
 			if (topic == null || string.IsNullOrWhiteSpace(topic.Language))
 			{
 				ViewBag.Message = "No such topic exists";
-				return View();
+				return RedirectToAction("SelectTopic", new { corpusId = corpusId, lang = lang });
 			}
 			lang = topic.Language;
 			ViewBag.Topic = topic;
@@ -60,7 +62,8 @@ namespace Orev.Controllers
 			return View(topic);
 		}
 
-		[HttpPost]
+		//[HttpPost]
+		[AjaxOnly]
 		[Authorize]
 		public JsonResult SaveJudgment(string topicId, string corpusId, string docId, Judgment.Verdict verdict)
 		{
@@ -78,9 +81,18 @@ namespace Orev.Controllers
 			RavenSession.Store(j);
 			RavenSession.SaveChanges();
 
-			var nextDoc = RavenSession.Query<CorpusDocument>()
-				.Where(x => x.CorpusId == corpusId)
-				.FirstOrDefault();
+			var query = RavenSession.Advanced.LuceneQuery<CorpusDocuments_ByNextUnrated.ReduceResult, CorpusDocuments_ByNextUnrated>()
+				.Where("Topics:*")
+				.AndAlso()
+				.Not
+				.WhereEquals("Topics", topicId);
+
+			// TODO: Make this optional
+			query = query.AndAlso().WhereEquals("CorpusId", corpusId);
+
+			var nextDoc = query.WaitForNonStaleResultsAsOfNow(TimeSpan.FromSeconds(30)).FirstOrDefault();
+
+			return Json(nextDoc);
 		}
 
     	[HttpGet]
@@ -109,7 +121,7 @@ namespace Orev.Controllers
 				.Where(x => x.Language == lang)
 				.ToArray();
 
-			ViewBag.Corpus = corpus;
+			ViewBag.CorpusId = corpus == null ? string.Empty : corpus.Id;
 
 			return View(topicsByLang);
 		}

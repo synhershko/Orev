@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Orev.Models.Topic>
+
+@{
+    ViewBag.Title = "SelectTopic";
+}
+
+<h2>SelectTopic</h2>
+
+<p>
+    @Html.ActionLink("Create New Topic", "Add", "Topics")
+</p>
+
+<table>
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Narrator
+        </th>
+        <th>
+            Language
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Narrator)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Language)
+        </td>
+        <td>
+            @Html.ActionLink("Start Judging", "Index", new { topicId=item.Id, lang = item.Language })
+        </td>
+    </tr>
+}
+
+</table>
