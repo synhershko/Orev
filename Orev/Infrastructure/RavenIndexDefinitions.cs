@@ -69,11 +69,11 @@ namespace Orev.Infrastructure
 		public CorpusDocuments_ByNextUnrated()
 		{
 			AddMap<CorpusDocument>(docs => from corpusDoc in docs
-										   select new  { DocumentId = corpusDoc.Id, CorpusId = corpusDoc.CorpusId, Topics = new string[0] }
+										   select new { DocumentId = corpusDoc.Id, CorpusId = corpusDoc.CorpusId, Topics = new string[0] }
 										   );
 
 			AddMap<Judgment>(judgments => from j in judgments
-										  select new  { DocumentId = j.DocumentId, CorpusId = string.Empty, Topics = new[] { j.TopicId } });
+										  select new { DocumentId = j.DocumentId, CorpusId = string.Empty, Topics = new string[] { j.TopicId } });
 
 			Reduce = results => from result in results
 								group result by result.DocumentId
@@ -82,7 +82,7 @@ namespace Orev.Infrastructure
 			                           	{
 			                           		DocumentId = g.Key,
 											CorpusId = g.Select(x=>x.CorpusId).FirstOrDefault(),
-			                           		Topics = g.SelectMany(x => x.Topics).Distinct()
+			                           		Topics = g.SelectMany(x => x.Topics).Distinct().ToArray()
 			                           	};
 
 			/*
