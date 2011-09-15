@@ -90,6 +90,7 @@
     <Compile Include="Controllers\TopicsController.cs" />
     <Compile Include="Helpers\AccountHelpers.cs" />
     <Compile Include="Helpers\RavenHelpers.cs" />
+    <Compile Include="Infrastructure\RavenIndexDefinitions.cs" />
     <Compile Include="Models\Corpus.cs" />
     <Compile Include="Models\CorpusDocument.cs" />
     <Compile Include="Models\CorpusFeedingInput.cs" />
@@ -204,7 +205,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Infrastructure\Indexes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
