@@ -1,21 +1,31 @@
 ﻿@model Orev.Models.CorpusFeedingInput
 
 @{
-    ViewBag.Title = "FeedDocuments";
+    ViewBag.Title = "Feed Documents";
 }
 
-<h2>FeedDocuments</h2>
+<h2>Feed Documents to corpus "@ViewBag.CorpusName"</h2>
 
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("FeedDocuments", "Corpora")) {
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>CorpusFeedingInput</legend>
+        <legend>Feed Documents to corpus "@ViewBag.CorpusName"</legend>
+
+        @Html.HiddenFor(model => model.CorpusId)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DocumentsZipUrl)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DocumentsZipUrl)
+            @Html.ValidationMessageFor(model => model.DocumentsZipUrl)
+        </div>
 
         <p>
-            <input type="submit" value="Save" />
+            <input type="submit" value="Feed" />
         </p>
     </fieldset>
 }

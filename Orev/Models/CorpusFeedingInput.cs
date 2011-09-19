@@ -1,17 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace Orev.Models
 {
 	public class CorpusFeedingInput
 	{
-		[Required]
-		public string CorpusId { get; set; }
+		public CorpusFeedingInput()
+		{
+			DocumentEncoding = Encoding.GetEncoding("windows-1255"); // TODO
+		}
 
 		[Required]
-		public Uri DocumentsZipUrl { get; set; }
+		public int CorpusId { get; set; }
+
+		[Required]
+		public string DocumentsZipUrl { get; set; }
+
+		public Encoding DocumentEncoding { get; set; }
 	}
 }

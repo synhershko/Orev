@@ -1,7 +1,13 @@
-﻿using System.Linq;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
+using Orev.CorpusReaders.Standard;
 using Orev.Helpers;
+using Orev.Infrastructure;
 using Orev.Models;
 
 namespace Orev.Controllers
@@ -14,7 +20,7 @@ namespace Orev.Controllers
         public ActionResult Index()
         {
         	var corpora = RavenSession.Query<Corpus>().Customize(x => x.WaitForNonStaleResultsAsOfLastWrite()).ToArray();
-            return View(corpora);
+            return View("Index", corpora);
         }
 
 		[HttpGet]
@@ -87,7 +93,9 @@ namespace Orev.Controllers
 			if (corpus == null)
 				return HttpNotFound();
 
-			return View(new CorpusFeedingInput {CorpusId = corpus.Id});
+			ViewBag.CorpusName = corpus.Name;
+
+			return View(new CorpusFeedingInput {CorpusId = corpus.Id.ToIntId()});
 		}
 
 		[HttpPost]
@@ -99,12 +107,34 @@ namespace Orev.Controllers
 				return HttpForbidden();
 
 			if (!ModelState.IsValid)
-				return View("FeedDocuments", input);
+			{
+				ViewData.ModelState.AddModelError("NoCorpus", "Invalid corpus Id");
+				return Index();
+			}
 
 			var corpus = RavenSession.Load<Corpus>(input.CorpusId);
 			if (corpus == null)
 				return HttpNotFound("The requested corpus does not exist.");
-			return View("Index");
+			
+			var task = new Task(() =>
+			                    	{
+			                    		var wc = new WebClient {Proxy = null};
+
+			                    		var tempFile = Path.GetTempFileName();
+										wc.DownloadFile(input.DocumentsZipUrl, tempFile);
+
+										var reader = new RavenCorpusReader(new ZippedCorpusReader(tempFile))
+										{
+											CorpusId = "corpus/" + input.CorpusId,
+											InitialDeployment = true, // TODO
+										};
+
+			                    		reader.Read();
+			                    	});
+			task.Start();
+
+			ViewData.ModelState.AddModelError("FeedOperation", "Corpus is being fed with documents in the background");
+			return Index();
 		}
     }
 }
