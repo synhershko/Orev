@@ -4,10 +4,28 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Judgment</h2>
+<h2>Judging topic "@Html.DisplayFor(model => model.Title)"</h2>
+
+<fieldset>
+    <legend>Topic </legend>
+
+    <div class="display-label">Description</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+
+    <div class="display-label">Narrator</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Narrator)
+    </div>
+
+    <div class="display-label">@Html.DisplayFor(model => model.Language)</div>
+</fieldset>
 
 <p>@Html.ValidationSummary()</p>
 
+@if (ViewBag.Corpus != null)
+{
 <div id="judgingContainer">
 <input type="button" id="relevantBtn" value="Yes, it is relevant" />
 <input type="button" id="irrelevantBtn" value="No, it is off topic" />
@@ -69,3 +87,4 @@
             
         });
     </script>
+}

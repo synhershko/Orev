@@ -50,13 +50,12 @@ namespace Orev.Controllers
 
 				if (corpus == null)
 				{
-					ViewBag.Message = "No corpus was found for the selected language";
+					ViewData.ModelState.AddModelError("NoCorpus", "No corpus was found for the selected language");
 				}
 				else
 				{
 					ViewBag.Corpus = corpus;
 				}
-				// Another option: return RedirectToAction("SelectCorpus", new { lang = lang });
 			}
 
 			return View(topic);

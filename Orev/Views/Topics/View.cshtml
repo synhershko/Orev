@@ -1,0 +1,35 @@
+﻿@model Orev.Models.Topic
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+<fieldset>
+    <legend>Topic</legend>
+
+    <div class="display-label">Title</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Title)
+    </div>
+
+    <div class="display-label">Description</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+
+    <div class="display-label">Narrator</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Narrator)
+    </div>
+
+    <div class="display-label">Language</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Language)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

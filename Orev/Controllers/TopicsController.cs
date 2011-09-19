@@ -16,6 +16,15 @@ namespace Orev.Controllers
             return View(topics);
         }
 
+		public ActionResult View(int id)
+		{
+			var topic = RavenSession.Load<Topic>(id);
+			if (topic == null)
+				return HttpNotFound();
+
+			return View(topic);
+		}
+
 		[HttpGet]
 		[Authorize]
 		public ActionResult Add(string lang)
