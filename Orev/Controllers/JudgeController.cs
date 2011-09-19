@@ -62,25 +62,28 @@ namespace Orev.Controllers
 		}
 
 		//[HttpPost]
-		[AjaxOnly]
 		[Authorize]
-		public JsonResult SaveJudgment(string topicId, string corpusId, string docId, Judgment.Verdict verdict)
+		public JsonResult SaveJudgment(string topicId, string corpusId, string docId, string jdgmnt)
 		{
-			// TODO: input validation
+			Judgment.Verdict verdict;
+			if (!string.IsNullOrWhiteSpace(jdgmnt) && Enum.TryParse(jdgmnt, out verdict))
+			{
+				// TODO: input validation
 
-			var j = new Judgment
-			        	{
-			        		CorpusId = corpusId,
-			        		TopicId = topicId,
-			        		DocumentId = docId,
-			        		UserJudgement = verdict,
-			        		UserId = "users/" + User.Identity.Name
-			        	};
+				var j = new Judgment
+				        	{
+				        		CorpusId = corpusId,
+				        		TopicId = topicId,
+				        		DocumentId = docId,
+				        		UserJudgement = verdict,
+				        		UserId = "users/" + User.Identity.Name
+				        	};
 
-			RavenSession.Store(j);
-			RavenSession.SaveChanges();
+				RavenSession.Store(j);
+				RavenSession.SaveChanges();
+			}
 
-			var query = RavenSession.Advanced.LuceneQuery<CorpusDocuments_ByNextUnrated.ReduceResult, CorpusDocuments_ByNextUnrated>()
+			var query = RavenSession.Advanced.LuceneQuery<CorpusDocument, CorpusDocuments_ByNextUnrated>()
 				.Where("Topics:*")
 				.AndAlso()
 				.Not
@@ -89,9 +92,18 @@ namespace Orev.Controllers
 			// TODO: Make this optional
 			query = query.AndAlso().WhereEquals("CorpusId", corpusId);
 
-			var nextDoc = query.WaitForNonStaleResultsAsOfNow(TimeSpan.FromSeconds(30)).FirstOrDefault();
+			// Topics:* AND -Topics:topics/1 AND CorpusId:corpus/1
 
-			return Json(nextDoc);
+			var nextDoc = query.WaitForNonStaleResultsAsOfNow(TimeSpan.FromSeconds(10)).FirstOrDefault();
+			if (nextDoc == null)
+				return Json(new { corpusDone = true, });
+
+			return Json(new
+			            	{
+			            		docId = nextDoc.Id.ToIntId(),
+								docContents = nextDoc.Content,
+								docTitle = nextDoc.Title,
+			            	});
 		}
 
     	[HttpGet]

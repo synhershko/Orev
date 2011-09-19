@@ -30,39 +30,37 @@
 <input type="button" id="relevantBtn" value="Yes, it is relevant" />
 <input type="button" id="irrelevantBtn" value="No, it is off topic" />
 
-<div>
-<iframe name="documentViewer" id="documentViewer" src=""></iframe>
-</div>
+<div id="documentViewerTitle"></div>
+<div id="documentViewer"></div>
 
 </div>
 
     <script type="text/javascript" language="javascript">
-        var corpusId = '@ViewBag.CorpusId';
-        //var corpusBaseUrl = '@ViewBag.CorpusUrl';
-        var topicId = '@ViewBag.TopicId';
+        var corpusId = '@ViewBag.Corpus.Id';
+        var postingUrl = '@Url.Action("SaveJudgment", "Judge", null, "http")';
+        var topicId = '@ViewBag.Topic.Id';
         var currentDocumentId = '';
         
         function handleResponse(result)
         {
             if (result.corpusDone)
             {
-                $('#documentViewer').attr("src","");
                 $('#judgingContainer').hide();
-                alert("done with this corpus");
+                alert("Done with this corpus");
             }
-            else
-            {
-                currentDocumentId = result.nextDoc;
-                $('#documentViewer').attr("src", corpusBaseUrl + currentDocumentId);
+            else {
+                $('#documentViewer').html(result.docContents);
+                $('#documentViewerTitle').html(result.docTitle);
             }
         }
-    
+
         function saveJudgment(docId, jdgmnt) {
             $.ajax({
-                type: "POST",
-                url: "/Judge/SaveJudgment",
-                data: { 'topicId': topicId, 'corpusId': corpusId, 'docId': docId, 'judgment': jdgmnt },
-                dataType: "json",
+                type: 'POST',
+                //contentType: 'application/json; charset=utf-8',
+                url: postingUrl,
+                data: { topicId: topicId, corpusId: corpusId, docId: docId, jdgmnt: jdgmnt },
+                //dataType: "json",
                 async: true,
                 cache: false,
                 success: function(jsonData) {
@@ -75,14 +73,14 @@
         }
 
         $(document).ready(function () {
-            saveJudgment('', false);
+            saveJudgment('', '');
             
             $("#relevantBtn").click(function(e) {
-                saveJudgment(currentDocumentId, true);
+                saveJudgment(currentDocumentId, "Relevant");
             });
             
             $("#irrelevantBtn").click(function(e) {
-                saveJudgment(currentDocumentId, false);
+                saveJudgment(currentDocumentId, "NonRelevant");
             });
             
         });

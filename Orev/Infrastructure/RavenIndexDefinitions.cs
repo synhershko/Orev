@@ -69,7 +69,7 @@ namespace Orev.Infrastructure
 		public CorpusDocuments_ByNextUnrated()
 		{
 			AddMap<CorpusDocument>(docs => from corpusDoc in docs
-										   select new { DocumentId = corpusDoc.Id, CorpusId = corpusDoc.CorpusId, Topics = (string[])new string[0] }
+										   select new { DocumentId = corpusDoc.Id, CorpusId = corpusDoc.CorpusId, Topics = new string[0] }
 										   );
 
 			AddMap<Judgment>(judgments => from j in judgments
