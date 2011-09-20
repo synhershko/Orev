@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -123,7 +124,7 @@ namespace Orev.Controllers
 			                    		var tempFile = Path.GetTempFileName();
 										wc.DownloadFile(input.DocumentsZipUrl, tempFile);
 
-										var reader = new RavenCorpusReader(new ZippedCorpusReader(tempFile))
+										var reader = new RavenCorpusReader(new ZippedCorpusReader(tempFile){FileEncoding = Encoding.GetEncoding("windows-1255")})
 										{
 											CorpusId = "corpus/" + input.CorpusId,
 											InitialDeployment = true, // TODO
