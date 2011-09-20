@@ -69,20 +69,20 @@ namespace Orev.Infrastructure
 		public CorpusDocuments_ByNextUnrated()
 		{
 			AddMap<CorpusDocument>(docs => from corpusDoc in docs
-										   select new { DocumentId = corpusDoc.Id, CorpusId = corpusDoc.CorpusId, Topics = new string[0] }
+										   select new { DocumentId = corpusDoc.Id, CorpusId = corpusDoc.CorpusId, Topics = new string[] {string.Empty} }
 										   );
 
 			AddMap<Judgment>(judgments => from j in judgments
-										  select new { DocumentId = j.DocumentId, CorpusId = string.Empty, Topics = new string[] { j.TopicId } });
+										  select new { DocumentId = j.DocumentId, j.CorpusId, Topics = new string[] { j.TopicId } });
 
 			Reduce = results => from result in results
-								group result by result.DocumentId
+								group result by new { result.DocumentId, result.CorpusId }
 			                    into g
 									select new
 			                           	{
-			                           		DocumentId = g.Key,
-											CorpusId = g.Select(x=>x.CorpusId).FirstOrDefault(),
-			                           		Topics = g.SelectMany(x => x.Topics).Distinct().ToArray()
+			                           		DocumentId = g.Key.DocumentId,
+											CorpusId = g.Key.CorpusId,
+			                           		Topics = g.SelectMany(x => x.Topics).Distinct().ToArray(),
 			                           	};
 			
 			TransformResults = (db, results) => from result in results
