@@ -29,6 +29,7 @@
 <div id="judgingContainer">
 <input type="button" id="relevantBtn" value="Yes, it is relevant" />
 <input type="button" id="irrelevantBtn" value="No, it is off topic" />
+<!-- <input type="button" id="skipBtn" value="Skip this one" /> -->
 
 <div id="documentViewerTitle"></div>
 <div id="documentViewer"></div>
@@ -51,10 +52,14 @@
             else {
                 $('#documentViewer').html(result.docContents);
                 $('#documentViewerTitle').html(result.docTitle);
+                currentDocumentId = result.docId;
             }
         }
 
         function saveJudgment(docId, jdgmnt) {
+            $('#documentViewer').html('');
+            $('#documentViewerTitle').html('Loading next document...');
+            
             $.ajax({
                 type: 'POST',
                 //contentType: 'application/json; charset=utf-8',
@@ -80,9 +85,13 @@
             });
             
             $("#irrelevantBtn").click(function(e) {
-                saveJudgment(currentDocumentId, "NonRelevant");
+                saveJudgment(currentDocumentId, "NotRelevant");
             });
-            
+
+            /*
+            $("#skipBtn").click(function (e) {
+                saveJudgment(currentDocumentId, "Skip");
+            });*/
         });
     </script>
 }

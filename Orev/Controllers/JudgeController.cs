@@ -70,17 +70,20 @@ namespace Orev.Controllers
 			{
 				// TODO: input validation
 
-				var j = new Judgment
-				        	{
-				        		CorpusId = corpusId,
-				        		TopicId = topicId,
-				        		DocumentId = docId,
-				        		UserJudgement = verdict,
-				        		UserId = "users/" + User.Identity.Name
-				        	};
+				if (verdict != Judgment.Verdict.Skip)
+				{
+					var j = new Judgment
+					        	{
+					        		CorpusId = corpusId,
+					        		TopicId = topicId,
+					        		DocumentId = docId,
+					        		UserJudgement = verdict,
+					        		UserId = "users/" + User.Identity.Name
+					        	};
 
-				RavenSession.Store(j);
-				RavenSession.SaveChanges();
+					RavenSession.Store(j);
+					RavenSession.SaveChanges();
+				}
 			}
 
 			var query = RavenSession.Advanced.LuceneQuery<CorpusDocument, CorpusDocuments_ByNextUnrated>()
@@ -94,13 +97,15 @@ namespace Orev.Controllers
 
 			// Topics:* AND -Topics:topics/1 AND CorpusId:corpus/1
 
+			// TODO: Introduce randomization
+
 			var nextDoc = query.WaitForNonStaleResultsAsOfNow(TimeSpan.FromSeconds(10)).FirstOrDefault();
 			if (nextDoc == null)
 				return Json(new { corpusDone = true, });
 
 			return Json(new
 			            	{
-			            		docId = nextDoc.Id.ToIntId(),
+			            		docId = nextDoc.Id,
 								docContents = nextDoc.Content,
 								docTitle = nextDoc.Title,
 			            	});
